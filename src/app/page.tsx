@@ -2,11 +2,18 @@
 
 import { Button } from '@/components/ui/button'
 import { signIn, signOut, useSession } from 'next-auth/react'
+import { Loader2 } from 'lucide-react'
 
 export default function Home() {
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
 
-  console.log('session', session)
+  if (status === 'loading') {
+    return (
+      <div className="flex flex-col justify-center items-center h-screen prose-cn">
+        <Loader2 className="w-8 h-8 animate-spin" />
+      </div>
+    )
+  }
 
   if (!session)
     return (
